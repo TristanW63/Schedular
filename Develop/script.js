@@ -1,4 +1,4 @@
-var myDay = [
+var workDay = [
     {
         id: "0",
         hour: "09",
@@ -67,5 +67,37 @@ var myDay = [
 //gets date
 function getHeaderDate() {
     var currentHeaderDate = moment().format('dddd, MMMM Do');
-    
+    $("#currentDay").text(currentHeaderDate);
 }
+
+//saves info to local storage
+function saveInfo() {
+    localStorage.setItem("workDay", JSON.stringify(workDay));
+}
+
+function displayInfo() {
+    workDay.forEach(function (_thisHour) {
+        $(`#${_thisHour.id}`).val(_thisHour.reminder);
+    })
+}
+
+function init() {
+    var storedDay = JSON.parse(localStorage.getItem("workDay"));
+
+    if (storedDay) {
+        workDay = storedDay;
+    }
+
+    saveInfo();
+    displayInfo();
+}
+
+getHeaderDate();
+
+workDay.forEach(function(thisHour) {
+    var timeSlotRows = $("<form>").attr({
+        "class": "row"
+    });
+    $("container").append(timeSlotRows);
+})
+
