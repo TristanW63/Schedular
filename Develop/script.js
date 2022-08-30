@@ -65,6 +65,7 @@ var workDay = [
 ]
 
 //gets date
+debugger
 function getHeaderDate() {
     var currentHeaderDate = moment().format('dddd, MMMM Do');
     $("#currentDay").text(currentHeaderDate);
@@ -93,11 +94,35 @@ function init() {
 }
 
 getHeaderDate();
-
+//creates rows for time slots
 workDay.forEach(function(thisHour) {
     var timeSlotRows = $("<form>").attr({
         "class": "row"
     });
     $("container").append(timeSlotRows);
+
+    var displayHours = $("<div>")
+    .text('${thisHour.hour}${thisHour.meridiem}')
+    .attr({
+        "class": "col-md-2 hour"
+    });
+//sets past, present or futre classes
+    var classesData = $("<textarea>");
+displayHours.append(classesData);
+classesData.attr("id", thisHour.id);
+if (thisHour.time < moment().format("HH")) {
+    classesData.attr ({
+        "class": "past",
+    })
+} else if (thisHour.time === moment().format("HH")) {
+    classesData.attr ({
+        "class": "present",
+    })
+} else if (thisHour.time > moment().format("HH")) {
+    classesData.attr ({
+        "class": "future"
+    })
+}
 })
+
 
