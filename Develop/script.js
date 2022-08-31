@@ -1,4 +1,4 @@
-var workDay = [
+const workDay = [
     {
         id: "0",
         hour: "09",
@@ -71,30 +71,31 @@ function getHeaderDate() {
 }
 
 //saves info to local storage
-function saveInfo() {
-    localStorage.setItem("workDay", JSON.stringify(workDay));
-}
+// function saveInfo() {
+//     localStorage.setItem("workDay", JSON.stringify(workDay));
+// }
 
-function displayInfo() {
-    workDay.forEach(function (_thisHour) {
-        $(`#${_thisHour.id}`).val(_thisHour.reminder);
-    })
-}
+// function displayInfo() {
+//     workDay.forEach(function (_thisHour) {
+//         $(`#${_thisHour.id}`).val(_thisHour.reminder);
+//     })
+// }
 
-function init() {
-    var storedDay = JSON.parse(localStorage.getItem("workDay"));
+// function init() {
+//     var storedDay = JSON.parse(localStorage.getItem("workDay"));
 
-    if (storedDay) {
-        workDay = storedDay;
-    }
+//     if (storedDay) {
+//        let workDay = storedDay;
+//     }
 
-    saveInfo();
-    displayInfo();
-}
+//     saveInfo();
+//     displayInfo();
+// }
 
 getHeaderDate();
 //creates rows for time slots
 workDay.forEach(function(thisHour) {
+
     var timeSlotRows = $("<form>").attr({
         "class": "row"
     });
@@ -140,13 +141,23 @@ savePlan.append(saveButton);
 timeSlotRows.append(displayHours, hourPlan, savePlan);
 })
 
-init();
+// init();
 
-$(".saveBtn").on("click", function(event) {
-    event.preventDefault();
-    var saveIndex = $(this).siblings(".description").children(".future").attr("id");
-    workDay[saveIndex].reminder = $(this).siblings(".description").children(".future").val();
-    console.log(saveIndex);
-    saveInfo();
-    displayInfo();
+// $(".saveBtn").on("click", function(event) {
+//     event.preventDefault();
+//     var saveIndex = $(this).siblings(".description").children(".future").attr("id");
+//     workDay.saveIndex.reminder = $(this).siblings(".description").children(".future").val();
+//     console.log(saveIndex);
+//     saveInfo();
+//     displayInfo();
+// })
+
+$(document).ready(function () {
+
+   $(".saveBtn").on("click", function () {
+    var text = $(this).siblings(".description").val();
+    var time = $(this).parent().attr("id");
+
+    localStorage.setItem(time, text);
+   })
 })
