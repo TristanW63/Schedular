@@ -7,6 +7,7 @@ function getHeaderDate() {
 var momentTime = moment().startOf("day").add(7, "hour");
 var hour = moment().format("HH");
 
+//creates rows and adds corrisponding classes
 for(var i = 8; i < 18; i++) {
     var timeSlot = momentTime.add(1, "hour").format("HH:mm A");
     var currentState;
@@ -38,7 +39,7 @@ for(var i = 8; i < 18; i++) {
 
 
 getHeaderDate();
-
+//saves notes to local storage and retrives them
    $(".saveBtn").on("click", function () {
     var text = $(this).siblings(".description").val();
     var time = $(this).parent().attr("id");
