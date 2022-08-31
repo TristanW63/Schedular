@@ -65,7 +65,6 @@ var workDay = [
 ]
 
 //gets date
-debugger
 function getHeaderDate() {
     var currentHeaderDate = moment().format('dddd, MMMM Do');
     $("#currentDay").text(currentHeaderDate);
@@ -102,9 +101,14 @@ workDay.forEach(function(thisHour) {
     $("container").append(timeSlotRows);
 
     var displayHours = $("<div>")
-    .text('${thisHour.hour}${thisHour.meridiem}')
+    .text(`${thisHour.hour}${thisHour.meridiem}`)
     .attr({
         "class": "col-md-2 hour"
+    });
+
+    var hourPlan = $("<div>")
+    .attr({
+        "class": "col-md-9 description p-0"
     });
 //sets past, present or futre classes
     var classesData = $("<textarea>");
@@ -123,6 +127,24 @@ if (thisHour.time < moment().format("HH")) {
         "class": "future"
     })
 }
+
+//save button
+var saveButton = $("<i class='far fa-save fa-lg'></i>")
+var savePlan = $("<button>")
+.attr({
+    "class": "col-md-1 saveBtn"
+});
+savePlan.append(saveButton);
+timeSlotRows.append(displayHours, hourPlan, savePlan);
 })
+debugger
+init();
 
-
+$(".saveBtn").on("click", function(event) {
+    event.preventDefault();
+    var saveIndex = $(this).siblings(".description").children(".future").attr("id");
+    workDay[saveIndex].reminder = $(this).siblings(".description").children(".future").val();
+    console.log(saveIndex);
+    saveInfo();
+    displayInfo();
+})
